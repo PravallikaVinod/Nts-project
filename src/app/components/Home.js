@@ -26,7 +26,7 @@ export class Home extends React.Component {
       return (
         <div className="col-md-12">
         <div className="row">
-	  <div className="col-md-4">
+	  <div className="col-md-4 xs-pt-15">
 <label>Name : {profileObj.name}</label>
 <label>Email : {profileObj.email}</label>
 <label>Family Name : {profileObj.familyName}</label>
@@ -34,11 +34,12 @@ export class Home extends React.Component {
 <label>Google Id : {profileObj.googleId}</label>
 </div>
 <div className="col-md-4">
-<Table/>
-</div>
-
-<div className="col-md-4">
 <D3Chart/>
+</div>
+</div>
+<div className="row">
+<div className="col-md-4">
+<Table/>
 </div>
 
 </div>

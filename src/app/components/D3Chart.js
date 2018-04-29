@@ -1,14 +1,14 @@
 import React from 'react';
 import {connect} from "react-redux";
 import store from "../store";
-import {updateMsg,setGoogleResponse}  from "../actions/mainActions";
+import {updateMsg,setGoogleResponse,getD3ChartData}  from "../actions/mainActions";
 
 var d3 = require("d3");
 
 @connect((store) => {
   return {
     message: store.main.message,
-    tableData:store.main.tableData,
+    chartData:store.main.chartData,
   };
 })
 
@@ -17,7 +17,9 @@ export class D3Chart extends React.Component {
   constructor(props) {
    super(props);
  }
-
+ componentDidMount(){
+   this.props.dispatch(getD3ChartData())
+ }
 
    render() {
      var margin = {
@@ -29,7 +31,7 @@ export class D3Chart extends React.Component {
 var width = 600 - margin.left - margin.right;
 var height = 270 - margin.top - margin.bottom;
 
-var parseDate = d3.timeParse("%d-%b-%y");
+var parseDate = d3.timeParse("%Y");
 
 // set the ranges
 var x = d3.scaleTime().range([0, width]);
@@ -41,7 +43,7 @@ var valueline = d3.line()
       return x(d.date);
     })
     .y(function (d) {
-      return y(d.close);
+      return y(d.value);
     });
 
 var svg = d3.select("#chart")
@@ -52,26 +54,12 @@ var svg = d3.select("#chart")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 // Get the data
-var data = [{
-    date: "1-May-12",
-    close: "58.13"
-}, {
-    date: "30-Apr-12",
-    close: "53.98"
-}, {
-    date: "27-Apr-12",
-    close: "67.00"
-}, {
-    date: "26-Apr-12",
-    close: "89.70"
-}, {
-    date: "25-Apr-12",
-    close: "99.00"
-}];
+
+var data = this.props.chartData;
 
 data.forEach(function (d) {
     d.date = parseDate(d.date);
-    d.close = +d.close;
+    d.value = +d.value;
 });
 
 // Scale the range of the data
@@ -79,7 +67,7 @@ x.domain(d3.extent(data, function (d) {
     return d.date;
     }));
 y.domain([0, d3.max(data, function (d) {
-    return d.close;
+    return d.value;
     })]);
 
 svg.append("path") // Add the valueline path.
@@ -87,7 +75,7 @@ svg.append("path") // Add the valueline path.
 
 // Scale the range of the data
   x.domain(d3.extent(data, function(d) { return d.date; }));
-  y.domain([0, d3.max(data, function(d) { return d.close; })]);
+  y.domain([0, d3.max(data, function(d) { return d.value; })]);
 
   // Add the valueline path.
   svg.append("path")
@@ -99,6 +87,7 @@ svg.append("path") // Add the valueline path.
   svg.append("g")
       .attr("transform", "translate(0," + height + ")")
       .call(d3.axisBottom(x));
+
 
   // Add the Y Axis
   svg.append("g")

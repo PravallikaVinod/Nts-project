@@ -23,7 +23,7 @@ function getHeader(){
 
 export function getTableData(){
   return (dispatch) => {
-    $.ajax({
+/*$.ajax({
     method: "GET",
     url: "http://www.amiiboapi.com/api/gameseries",
     dataType: "json"
@@ -32,7 +32,17 @@ export function getTableData(){
       console.log(msg)
       var data = msg.amiibo;
 dispatch(updateStore(data))
-    });
+});*/
+return fetch('https://facebook.github.io/react-native/movies.json')
+   .then((response) => response.json())
+   .then((responseJson) => {
+  //   return responseJson.movies;
+dispatch(updateStore(responseJson.movies))
+   })
+   .catch((error) => {
+     console.error(error);
+   });
+
 }
 }
 function updateStore(data){
@@ -58,4 +68,46 @@ function makeAPICall(){
        'Accept':'application/json'
      }
    }).then(response => Promise.all([response, JSON.stringify(response.json())]));*/
+}
+
+export function getD3ChartData(){
+
+  return (dispatch) => {
+    $.ajax({
+      url: 'https://api.worldbank.org/v2/countries/NOR/indicators/NY.GDP.MKTP.KD.ZG?per_page=30&MRV=30&format=json',
+      complete: function(json) {
+      var  data = JSON.parse(json.responseText);
+        // set some variable to host data
+        console.log(data[1])
+        sessionStorage.setItem("chartData",JSON.stringify(data[1]))
+        var modifiedData = [];
+          data[1].forEach(function(d){
+            if(d.value > 0) modifiedData.push(d)
+          })
+          console.log(data[1])
+        dispatch(updateChartData(modifiedData));
+      },
+        error: function() {
+      console.log('there was an error!');
+    }
+  });
+
+}
+}
+
+function updateChartData(data){
+  
+  return {
+             type: "CHART_DATA",
+             data
+         }
+}
+
+export function fecthChartData1(){
+  	return (dispatch) => {
+      return getD3ChartData().then(([response, json]) =>{
+        console.log(json);
+        console.log(response)
+      });
+    }
 }

@@ -2,6 +2,7 @@ export default function reducer(state = {
 message:"Hello Manvitha",
 googleResponse:{},
 tableData:[],
+chartData:[],
 }, action) {
   console.log("in reducer!!");
   console.log(action);
@@ -31,6 +32,14 @@ tableData:[],
           }
         }
         break;
+        case "CHART_DATA":
+          {
+            return {
+               ...state,
+              chartData: action.data,
+            }
+          }
+          break;
 
   }
   return state

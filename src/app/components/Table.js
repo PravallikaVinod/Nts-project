@@ -21,12 +21,12 @@ export class Table extends React.Component {
 
    render() {
 var tbodyData = this.props.tableData.map(function(rowData,i){
-    return(<tr key={i}><td>{rowData.key}</td><td>{rowData.name}</td></tr>);
+    return(<tr key={i}><td>{rowData.title}</td><td>{rowData.releaseYear}</td></tr>);
   })
       return (
 	  <div>
 <table className="table-style">
-  <thead><tr><th>Key</th><th>Name</th></tr></thead>
+  <thead><tr><th>Movie Title</th><th>Year</th></tr></thead>
   <tbody>{tbodyData}</tbody>
 </table>
 		 </div>
