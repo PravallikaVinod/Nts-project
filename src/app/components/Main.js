@@ -14,21 +14,20 @@ import { Redirect } from "react-router";
 export class Main extends React.Component {
 
   constructor(props) {
-   super(props);
- }
+    super(props);
+  }
+  
+  render() {
+    if(sessionStorage.getItem("googleId") != null){
+      return (
+        <div>
+        {this.props.children}
+        </div>
+      );
+    }else{
+      sessionStorage.clear();
+      return(<Redirect to={"/login"} />)
+    }
 
-
-   render() {
-if(sessionStorage.getItem("googleId") != null){
-  return (
-<div>
-  {this.props.children}
- </div>
-  );
-}else{
-  sessionStorage.clear();
-  return(<Redirect to={"/login"} />)
-}
-
-   }
+  }
 }

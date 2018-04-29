@@ -15,21 +15,20 @@ import { GoogleLogin } from 'react-google-login';
 export class Table extends React.Component {
 
   constructor(props) {
-   super(props);
- }
+    super(props);
+  }
 
-
-   render() {
-var tbodyData = this.props.tableData.map(function(rowData,i){
-    return(<tr key={i}><td>{rowData.title}</td><td>{rowData.releaseYear}</td></tr>);
-  })
-      return (
-	  <div>
-<table className="table-style">
-  <thead><tr><th>Movie Title</th><th>Year</th></tr></thead>
-  <tbody>{tbodyData}</tbody>
-</table>
-		 </div>
-      );
-   }
+  render() {
+    var tbodyData = this.props.tableData.map(function(rowData,i){
+      return(<tr key={i}><td>{rowData.title}</td><td>{rowData.releaseYear}</td></tr>);
+    })
+    return (
+      <div>
+      <table className="table-style">
+      <thead><tr><th>Movie Title</th><th>Year</th></tr></thead>
+      <tbody>{tbodyData}</tbody>
+      </table>
+      </div>
+    );
+  }
 }
