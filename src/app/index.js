@@ -7,7 +7,7 @@ import {Login} from "./components/Login";
 import {Home} from "./components/Home";
 import {Main} from "./components/Main";
 
-class App extends React.Component {
+export default class App extends React.Component {
 
   render() {
 

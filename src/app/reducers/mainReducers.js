@@ -4,9 +4,6 @@ export default function reducer(state = {
   tableData:[],
   chartData:[],
 }, action) {
-  console.log("in reducer!!");
-  console.log(action);
-
   switch (action.type) {
     case "UPDATE_MSG":
     {

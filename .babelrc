@@ -1,8 +1,10 @@
 {
-  "plugins": ["transform-es2015-modules-commonjs"],
+  "presets":["env","react"],
+  "plugins": ["transform-es2015-modules-commonjs","transform-decorators-legacy","transform-object-rest-spread"],
   "env":{
     "test":{
-      "plugins":["transform-es2015-modules-commonjs"]
+      "plugins":["transform-es2015-modules-commonjs","transform-decorators-legacy","transform-object-rest-spread"]
     }
   }
+
 }
