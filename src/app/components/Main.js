@@ -16,8 +16,9 @@ export class Main extends React.Component {
   constructor(props) {
     super(props);
   }
-  
+
   render() {
+    alert(sessionStorage.getItem("googleId"))
     if(sessionStorage.getItem("googleId") != null){
       return (
         <div>

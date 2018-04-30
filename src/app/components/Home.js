@@ -21,17 +21,16 @@ export class Home extends React.Component {
     this.props.dispatch(getTableData());
   }
   render() {
-    var profileObj = JSON.parse(sessionStorage.getItem("profileObj"));
-
+    var profileObj = this.props.googleResponse.profileObj;
+    var loginInfo = null;
+if(profileObj != undefined){
+loginInfo = <span><label>Name : {profileObj.name}</label><label>Email : {profileObj.email}</label><label>Family Name : {profileObj.familyName}</label><br/><label>Google Id : {profileObj.googleId}</label></span>;
+}
     return (
       <div className="col-md-12">
       <div className="row">
-      <div className="col-md-4 xs-pt-15">
-      <label>Name : {profileObj.name}</label>
-      <label>Email : {profileObj.email}</label>
-      <label>Family Name : {profileObj.familyName}</label>
-      <br/>
-      <label>Google Id : {profileObj.googleId}</label>
+      <div className="col-md-4 xs-pt-15 google-Info">
+{loginInfo}
       </div>
       <div className="col-md-4">
       <D3Chart/>
