@@ -31,7 +31,7 @@ export class Login extends React.Component {
   //    alert(sessionStorage.getItem("googleId"))
       if(sessionStorage.getItem("googleId") == null){
         return (
-            <div className = "col-md-12 login-div" >
+            <div className = "col-md-12 login-div" > Login
             <GoogleLogin clientId = "209378584578-s5nmcisn7u0j18i5pn5t0a0eflp1suf8.apps.googleusercontent.com"
             buttonText = "Login with Google"
             onSuccess = { this.responseGoogle.bind(this) }
