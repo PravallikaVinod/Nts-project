@@ -18,7 +18,7 @@ export class Main extends React.Component {
   }
 
   render() {
-    alert(sessionStorage.getItem("googleId"))
+    
     if(sessionStorage.getItem("googleId") != null){
       return (
         <div>
