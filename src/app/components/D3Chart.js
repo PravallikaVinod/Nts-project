@@ -22,6 +22,9 @@ export class D3Chart extends React.Component {
   }
 
   render() {
+
+    var parseDate = d3.timeParse("%Y");
+
     var margin = {
       top: 30,
       right: 20,
@@ -46,56 +49,92 @@ export class D3Chart extends React.Component {
       return y(d.value);
     });
 
-    var svg = d3.select("#chart")
-    .append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-    .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    if(this.props.chartData.length > 0){
+      var svgContent = document.getElementsByClassName("chart")[0].innerHTML;
+      if(svgContent == undefined || svgContent == ""){
+        var svg =  d3.select(".chart")
+        .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    // Get the data
+        // Get the data
+        var data = this.props.chartData;
 
-    var data = this.props.chartData;
+        data.forEach(function (d) {
+          d.date = parseDate(d.date);
+          d.value = +d.value;
+        });
 
-    data.forEach(function (d) {
-      d.date = parseDate(d.date);
-      d.value = +d.value;
-    });
+        // Scale the range of the data
+        x.domain(d3.extent(data, function (d) {
+          return d.date;
+        }));
+        y.domain([0, d3.max(data, function (d) {
+          return d.value;
+        })]);
 
-    // Scale the range of the data
-    x.domain(d3.extent(data, function (d) {
-      return d.date;
-    }));
-    y.domain([0, d3.max(data, function (d) {
-      return d.value;
-    })]);
+        svg.append("path") // Add the valueline path.
+        .attr("d", valueline(data));
 
-    svg.append("path") // Add the valueline path.
-    .attr("d", valueline(data));
+        // Scale the range of the data
+        x.domain(d3.extent(data, function(d) { return d.date; }));
+        y.domain([0, d3.max(data, function(d) { return d.value; })]);
 
-    // Scale the range of the data
-    x.domain(d3.extent(data, function(d) { return d.date; }));
-    y.domain([0, d3.max(data, function(d) { return d.value; })]);
+        // Add the valueline path.
+        svg.append("path")
+        .data([data])
+        .attr("class", "line")
+        .attr("d", valueline);
 
-    // Add the valueline path.
-    svg.append("path")
-    .data([data])
-    .attr("class", "line")
-    .attr("d", valueline);
+        // Add the X Axis
+        svg.append("g")
+        .attr("transform", "translate(0," + height + ")")
+        .call(d3.axisBottom(x));
 
-    // Add the X Axis
-    svg.append("g")
-    .attr("transform", "translate(0," + height + ")")
-    .call(d3.axisBottom(x));
+        // Add the Y Axis
+        svg.append("g")
+        .call(d3.axisLeft(y));
 
+      }
+      else{
+        // Get the data
+        var data = this.props.chartData;
 
-    // Add the Y Axis
-    svg.append("g")
-    .call(d3.axisLeft(y));
+        data.forEach(function (d) {
+          d.date = parseDate(d.date);
+          d.value = +d.value;
+        });
 
+        // Scale the range of the data
+        x.domain(d3.extent(data, function (d) {
+          return d.date;
+        }));
+        y.domain([0, d3.max(data, function (d) {
+          return d.value;
+        })]);
+
+        // Scale the range of the data
+        x.domain(d3.extent(data, function(d) { return d.date; }));
+        y.domain([0, d3.max(data, function(d) { return d.value; })]);
+
+        var svg = d3.select(".chart").transition();
+        // Make the changes
+        svg.select(".line")   // change the line
+        .duration(750)
+        .attr("d", valueline(data));
+        svg.select(".x.axis") // change the x axis
+        .duration(750)
+        .call(d3.axisBottom(x));
+        svg.select(".y.axis") // change the y axis
+        .duration(750)
+        .call(d3.axisLeft(y));
+      }
+    }
     return (
       <div>
-      <div className="col-md-8" id="chart"></div>
+      <div className="col-md-8 chart"></div>
       </div>
     );
   }
