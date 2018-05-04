@@ -62,6 +62,10 @@ export function generateNormalTableRows(table) {
 
 
 function d3ChartAPICall(dispatch){
+  $("#chartLoader").addClass("displayBlock")
+  $("#chartData").addClass("displayNone")
+  $("#chartLoader").removeClass("displayNone")
+  $("#chartData").removeClass("displayBlock")
   $.ajax({
     url: 'https://api.worldbank.org/v2/countries/NOR/indicators/NY.GDP.MKTP.KD.ZG?per_page=30&MRV=30&format=json',
     complete: function(json) {
@@ -72,6 +76,14 @@ function d3ChartAPICall(dispatch){
       data[1].forEach(function(d){
         if(d.value > 0) modifiedData.push(d)
       })
+      setTimeout(function(){
+        $("#chartLoader").removeClass("displayBlock")
+        $("#chartLoader").addClass("displayNone")
+        $("#chartData").addClass("displayBlock")
+        $("#chartData").removeClass("displayNone")
+      },10000)
+
+
 
       dispatch(updateChartData(modifiedData));
       if(d3ChartInterval == null)

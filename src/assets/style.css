@@ -20,12 +20,16 @@ path {
 }
 .login-div{
   text-align: center;
-  padding-top:200px;
+  top:200px;
+  position:absolute;
+  left:34%;
+  height:200px;
+  border:1px solid #d2caca;
 }
 
 .login-button{
   display: inline-block;
-  background: blue;
+  background: #17a2b8d4;
   color: rgb(255, 255, 255);
   width: 190px;
   padding-top: 10px;
@@ -39,4 +43,50 @@ path {
 }
 .xs-pt-15{
   padding-top:15px;
+}
+.xs-pt-25{
+  padding-top:25px;
+}
+.floatRight{
+  float:right
+}
+
+.header{
+  height: 80px;
+  border-bottom: 1px solid #ddd;
+  padding-top: 10px;
+}
+.profile{
+  width: 30px;
+  border-radius: 50%;
+  cursor:pointer;
+}
+.xs-pt-50{
+  padding-top:50px;
+}
+span{
+  font-size:12px;
+  white-space:nowrap;
+}
+.xs-pl-10{
+  padding-left:10px;
+}
+
+.xs-pl-25{
+  padding-left:25px;
+}
+.chartBorder{
+  border-right:1px solid #eee;
+  border-bottom:1px solid #eee;
+
+}
+.tableBorder{
+  border-bottom:1px solid #eee;
+  padding-left:50px;
+}
+.displayNone{
+  display:none;
+}
+.displayBlock{
+  display:block;
 }
