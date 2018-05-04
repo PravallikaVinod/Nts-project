@@ -76,15 +76,16 @@ function d3ChartAPICall(dispatch){
       data[1].forEach(function(d){
         if(d.value > 0) modifiedData.push(d)
       })
+
       setTimeout(function(){
-        $("#chartLoader").removeClass("displayBlock")
-        $("#chartLoader").addClass("displayNone")
         $("#chartData").addClass("displayBlock")
         $("#chartData").removeClass("displayNone");
+        $("#chartLoader").addClass("displayNone")
+        $("#chartLoader").removeClass("displayBlock");
         dispatch(updateChartData(modifiedData));
         if(d3ChartInterval == null)
         refreshChart(dispatch)
-      },10000)
+      },5000)
 
     },
     error: function() {
