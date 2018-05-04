@@ -80,14 +80,12 @@ function d3ChartAPICall(dispatch){
         $("#chartLoader").removeClass("displayBlock")
         $("#chartLoader").addClass("displayNone")
         $("#chartData").addClass("displayBlock")
-        $("#chartData").removeClass("displayNone")
+        $("#chartData").removeClass("displayNone");
+        dispatch(updateChartData(modifiedData));
+        if(d3ChartInterval == null)
+        refreshChart(dispatch)
       },10000)
 
-
-
-      dispatch(updateChartData(modifiedData));
-      if(d3ChartInterval == null)
-      refreshChart(dispatch)
     },
     error: function() {
       console.log('there was an error!');
